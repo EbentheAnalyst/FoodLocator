@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FoodLocator.ViewModels"
+             x:Class="FoodLocator.MainPage"
+             Title="Food Locator">
+    <ContentPage.BindingContext>
+        <local:FoodsViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <StackLayout Padding="10">
+        <Entry Placeholder="Search for food..." Text="{Binding SearchQuery}" />
+        <Picker Title="Select Category" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" />
+       
+            <CollectionView ItemsSource="{Binding FilteredFoods}" HorizontalOptions="Center">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="10" HasShadow="True" CornerRadius="10" Margin="10">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Image Source="{Binding Image}" WidthRequest="500" HeightRequest="450" Margin="10">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:FoodsViewModel}}, Path=FoodSelectedCommand}"
+                                    CommandParameter="{Binding .}" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label Text="{Binding Name}" FontSize="Large" HorizontalOptions="Center" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+           </StackLayout>
+    </ScrollView>
+</ContentPage>
